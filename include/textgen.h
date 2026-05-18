@@ -1,35 +1,35 @@
-// Copyright 2026 Anastasiia Astafeva
-#ifndef TEXTGEN_H
-#define TEXTGEN_H
+// Copyright 2026 Anastasia Astafyeva
+
+#ifndef INCLUDE_TEXTGEN_H_
+#define INCLUDE_TEXTGEN_H_
 
 #include <deque>
 #include <map>
-#include <vector>
-#include <string>
 #include <random>
+#include <string>
+#include <vector>
 
 class MarkovTextGenerator {
-private:
-    typedef std::deque<std::string> Prefix;
-    typedef std::map<Prefix, std::vector<std::string>> StateTable;
-    
-    StateTable statetab;
-    int npref;
-    std::mt19937 rng;
-    
-public:
-    MarkovTextGenerator(int prefixSize = 2);
-    
-    void buildFromFile(const std::string& filename);
-    void buildFromText(const std::string& text);
-    
-    std::string generate(int maxWords);
-    
-    // Для тестирования
-    StateTable& getStateTable() { return statetab; }
-    void clear() { statetab.clear(); }
-    void addSuffix(const Prefix& prefix, const std::string& suffix);
-    std::string getRandomSuffix(const Prefix& prefix);
+ private:
+  typedef std::deque<std::string> Prefix;
+  typedef std::map<Prefix, std::vector<std::string> > StateTable;
+
+  StateTable statetab;
+  int npref;
+  std::mt19937 rng;
+
+ public:
+  explicit MarkovTextGenerator(int prefixSize = 2);
+
+  void buildFromFile(const std::string& filename);
+  void buildFromText(const std::string& text);
+
+  std::string generate(int maxWords);
+
+  StateTable& getStateTable();
+  void clear();
+  void addSuffix(const Prefix& prefix, const std::string& suffix);
+  std::string getRandomSuffix(const Prefix& prefix);
 };
 
-#endif
+#endif  // INCLUDE_TEXTGEN_H_
