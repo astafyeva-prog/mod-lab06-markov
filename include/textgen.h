@@ -1,3 +1,4 @@
+// Copyright 2026 Anastasiia Astafeva
 #ifndef TEXTGEN_H
 #define TEXTGEN_H
 
