@@ -13,14 +13,14 @@ add_executable(markov_gen
 enable_testing()
 find_package(GTest REQUIRED)
 
-add_executable(run_tests
+add_executable(mod-lab06-markov.test
   test/tests.cpp
   src/textgen.cpp
 )
 
-target_link_libraries(run_tests
+target_link_libraries(mod-lab06-markov.test
   GTest::GTest
   GTest::Main
 )
 
-add_test(NAME MarkovTests COMMAND run_tests)
+add_test(NAME MarkovTests COMMAND mod-lab06-markov.test)
