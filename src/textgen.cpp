@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <cctype>
 #include <fstream>
-#include <iostream>
+#include <random>
 #include <sstream>
 #include <stdexcept>
 #include <string>
@@ -38,9 +38,7 @@ void MarkovTextGenerator::buildFromText(const std::string& text) {
             word.begin(),
             word.end(),
             [](char c) {
-              return std::ispunct(static_cast<unsigned char>(c)) &&
-                     c != '-' &&
-                     c != '\'';
+              return std::ispunct(static_cast<unsigned char>(c));
             }),
         word.end());
 
