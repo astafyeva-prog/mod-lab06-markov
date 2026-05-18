@@ -12,7 +12,7 @@
 #include <vector>
 
 MarkovTextGenerator::MarkovTextGenerator(int prefixSize)
-    : npref(prefixSize), rng(std::random_device{}()) {
+    : npref(prefixSize), rng(std::random_device()()) {
 }
 
 void MarkovTextGenerator::buildFromFile(const std::string& filename) {
@@ -70,14 +70,18 @@ void MarkovTextGenerator::addSuffix(
   statetab[prefix].push_back(suffix);
 }
 
-std::string MarkovTextGenerator::getRandomSuffix(const Prefix& prefix) {
+std::string MarkovTextGenerator::getRandomSuffix(
+    const Prefix& prefix) {
   StateTable::iterator it = statetab.find(prefix);
 
   if (it == statetab.end() || it->second.empty()) {
     return "";
   }
 
-  std::uniform_int_distribution<size_t> dist(0, it->second.size() - 1);
+  std::uniform_int_distribution<size_t> dist(
+      0,
+      it->second.size() - 1);
+
   return it->second[dist(rng)];
 }
 
@@ -87,11 +91,18 @@ std::string MarkovTextGenerator::generate(int maxWords) {
   }
 
   StateTable::iterator it = statetab.begin();
-  std::uniform_int_distribution<size_t> dist(0, statetab.size() - 1);
+
+  std::uniform_int_distribution<size_t> dist(
+      0,
+      statetab.size() - 1);
+
   std::advance(it, dist(rng));
 
   Prefix prefix = it->first;
-  std::vector<std::string> result(prefix.begin(), prefix.end());
+
+  std::vector<std::string> result(
+      prefix.begin(),
+      prefix.end());
 
   for (int i = npref; i < maxWords; ++i) {
     std::string next = getRandomSuffix(prefix);
@@ -101,6 +112,7 @@ std::string MarkovTextGenerator::generate(int maxWords) {
     }
 
     result.push_back(next);
+
     prefix.pop_front();
     prefix.push_back(next);
   }
@@ -118,7 +130,8 @@ std::string MarkovTextGenerator::generate(int maxWords) {
   return ss.str();
 }
 
-MarkovTextGenerator::StateTable& MarkovTextGenerator::getStateTable() {
+MarkovTextGenerator::StateTable&
+MarkovTextGenerator::getStateTable() {
   return statetab;
 }
 
