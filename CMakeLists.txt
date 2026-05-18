@@ -1,13 +1,15 @@
-cmake_minimum_required (VERSION 3.10.2)
-project (mod-lab06-markov)
+cmake_minimum_required(VERSION 3.10)
+project(MarkovTextGenerator)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -g")
 
+# Основная программа
+add_executable(markov_gen src/main.cpp src/textgen.cpp)
 
-set(tool_dest "bin")
-set(lib_dest "lib")
-set(include_dest "include/")
+# Тесты
+enable_testing()
+find_package(GTest REQUIRED)
 
-add_subdirectory(src)
-add_subdirectory(test)
+add_executable(run_tests test/tests.cpp src/textgen.cpp)
+target_link_libraries(run_tests GTest::GTest GTest::Main)
+add_test(NAME MarkovTests COMMAND run_tests)
