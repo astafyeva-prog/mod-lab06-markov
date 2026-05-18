@@ -1,3 +1,4 @@
+// Copyright 2026 Anastasiia Astafeva
 #include "textgen.h"
 #include <iostream>
 #include <fstream>
